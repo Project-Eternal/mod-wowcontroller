@@ -1,0 +1,87 @@
+#
+# mod-wowcontroller: the server uses a World of Warcraft client (3.3.5a) next to it: its data files (DBC, cameras), and commands for it (.wow ...)
+#
+
+[worldserver]
+
+#
+#    WoWController.Enable
+#        Description: Use a game at all.
+#        Default:     1 - (Enabled)
+#                     0 - (Disabled)
+
+WoWController.Enable = 1
+
+#
+#    WoWController.Process
+#        Description: Which game.
+#        Default:     "auto"      - the game in the page when the server runs embedded in one, else the directory below when it is set
+#                     "page"      - the game in the web page around the server (the WebAssembly build)
+#                     "directory" - an extracted game in WoWController.Directory (DBFilesClient/*.dbc ...; takes no commands)
+
+WoWController.Process = "auto"
+
+#
+#    WoWController.Directory
+#        Description: The extracted game for "directory" (its files under their names in the game: DBFilesClient/Spell.dbc).
+#        Default:     "" - (none)
+
+WoWController.Directory = ""
+
+#
+#    WoWController.Dbc
+#        Description: The DBC stores are read from the game (files it does not give are read from DataDir/dbc as before).
+#        Default:     1 - (Enabled)
+#                     0 - (Disabled: DataDir/dbc only)
+
+WoWController.Dbc = 1
+
+#
+#    WoWController.Cameras
+#        Description: The cinematic cameras (the .m2 files of CinematicCamera.dbc) are read from the game (else from DataDir/Cameras).
+#        Default:     1 - (Enabled)
+#                     0 - (Disabled: DataDir/Cameras only)
+
+WoWController.Cameras = 1
+
+#
+#    WoWController.World
+#        Description: The world near the player comes from the game instead of the extracted maps/ and vmaps/ (the game in the page
+#                     only): the terrain (height, area, liquid) from the game's ADT files, converted on first use; the map's own buildings
+#                     and doodads (line of sight, hits, floor height, area, indoors, liquid) from the game's model files, extracted and
+#                     converted per grid on first use (in the background: the running game answers until a grid is made); the game
+#                     objects' models (doors, transports) asked of the running game, as they are now. Only positions within the visibility
+#                     range of a player in the world are answered; elsewhere the server behaves as without map data (it simulates in
+#                     detail what is in effect for the player). Needs vmap.enableLOS / vmap.enableHeight for the collision part.
+#        Default:     1 - (Enabled)
+#                     0 - (Disabled: the files)
+
+WoWController.World = 1
+
+#
+#    WoWController.Paths
+#        Description: With WoWController.World: the navigation meshes (in place of mmaps/) are made from the terrain and the map's
+#                     models, per grid when the server loads it (in the background: straight paths until it is made), with the mmaps
+#                     generator's settings, as a Detour tile cache: closed doors are obstacles in them, open ones are not. Needs
+#                     MoveMaps.Enable.
+#        Default:     1 - (Enabled)
+#                     0 - (Disabled: mmaps/ files)
+
+WoWController.Paths = 1
+
+#
+#    WoWController.World.KeepSeconds
+#        Description: How long the collision and navigation of a grid made from the game's files stay in memory after no player has it
+#                     in range any more (then they are made again when needed; the models only they used are released).
+#        Default:     60
+
+WoWController.World.KeepSeconds = 60
+
+#
+#    WoWController.World.Compare
+#        Description: 1 in this many questions about the map's models answered from the grids made from the game's files is also
+#                     asked of the running game, and the answers compared (counts in the minute's statistics, the first differences
+#                     in the log). For testing.
+#        Default:     0 - (Off)
+
+WoWController.World.Compare = 0
